@@ -1,7 +1,7 @@
 import { useStore } from '../store';
 import Task from './Task';
 import './Column.css';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import classNames from 'classnames';
 import { shallow } from 'zustand/shallow';
 
@@ -36,26 +36,56 @@ export default function Column({ state }) {
         setDraggedTask(null);
       }}
     >
+      {/* Cabeçalho da coluna */}
       <div className="titleWrapper">
         <p>{state}</p>
-        <button onClick={() => setOpen(true)}>Adicionar</button>
+        <button onClick={() => setOpen(true)}>+</button>
       </div>
+
+      {/* Lista de tarefas */}
       {tasks.map((task) => (
         <Task title={task.title} key={task.title} />
       ))}
+
+      {/* Modal */}
       {open && (
-        <div className="Modal">
-          <div className="modalContent">
-            <input onChange={(e) => setText(e.target.value)} value={text} />
-            <button
-              onClick={() => {
-                addTask(text, state);
-                setText('');
-                setOpen(false);
-              }}
-            >
-              Add
-            </button>
+        <div className="Modal" onClick={() => setOpen(false)}>
+          <div
+            className="modalContent"
+            onClick={(e) => e.stopPropagation()} // impede fechar ao clicar dentro
+          >
+            {/* 🔹 Título do modal */}
+            <h3 className="modalTitle">Adicionar nova tarefa</h3>
+
+            {/* Campo de texto */}
+            <input
+              onChange={(e) => setText(e.target.value)}
+              value={text}
+              placeholder="Digite o nome da tarefa..."
+            />
+
+            {/* Botões lado a lado */}
+            <div className="modalButtons">
+              <button
+                className="addBtn"
+                onClick={() => {
+                  if (text.trim() !== '') {
+                    addTask(text, state);
+                    setText('');
+                    setOpen(false);
+                  }
+                }}
+              >
+                Adicionar
+              </button>
+
+              <button
+                className="closeBtn"
+                onClick={() => setOpen(false)}
+              >
+                Fechar
+              </button>
+            </div>
           </div>
         </div>
       )}
