@@ -14,23 +14,28 @@ export default function Column({ state }) {
     (store) => store.tasks.filter((task) => task.state === state),
     shallow
   );
+
   const addTask = useStore((store) => store.addTask);
   const setDraggedTask = useStore((store) => store.setDraggedTask);
   const draggedTask = useStore((store) => store.draggedTask);
   const moveTask = useStore((store) => store.moveTask);
 
+  // Fecha o modal com tecla ESC
+  useEffect(() => {
+    const handleEsc = (e) => e.key === 'Escape' && setOpen(false);
+    window.addEventListener('keydown', handleEsc);
+    return () => window.removeEventListener('keydown', handleEsc);
+  }, []);
+
   return (
     <div
-      className={classNames('column', { drop: drop })}
+      className={classNames('column', { drop })}
       onDragOver={(e) => {
+        e.preventDefault();
         setDrop(true);
-        e.preventDefault();
       }}
-      onDragLeave={(e) => {
-        setDrop(false);
-        e.preventDefault();
-      }}
-      onDrop={(e) => {
+      onDragLeave={() => setDrop(false)}
+      onDrop={() => {
         setDrop(false);
         moveTask(draggedTask, state);
         setDraggedTask(null);
@@ -39,32 +44,41 @@ export default function Column({ state }) {
       {/* Cabeçalho da coluna */}
       <div className="titleWrapper">
         <p>{state}</p>
-        <button onClick={() => setOpen(true)}>+</button>
+        <button
+          onClick={() => setOpen(true)}
+          aria-label="Adicionar tarefa"
+          title="Adicionar tarefa"
+        >
+          +
+        </button>
       </div>
 
       {/* Lista de tarefas */}
-      {tasks.map((task) => (
-        <Task title={task.title} key={task.title} />
-      ))}
+      <div className="tasksList">
+        {tasks.length > 0 ? (
+          tasks.map((task) => <Task title={task.title} key={task.title} />)
+        ) : (
+          <p className="emptyState">Nenhuma tarefa ainda...</p>
+        )}
+      </div>
 
-      {/* Modal */}
+      {/* Modal de nova tarefa */}
       {open && (
         <div className="Modal" onClick={() => setOpen(false)}>
           <div
             className="modalContent"
-            onClick={(e) => e.stopPropagation()} // impede fechar ao clicar dentro
+            onClick={(e) => e.stopPropagation()} // Evita fechar clicando dentro
           >
-            {/* 🔹 Título do modal */}
             <h3 className="modalTitle">Adicionar nova tarefa</h3>
 
-            {/* Campo de texto */}
             <input
-              onChange={(e) => setText(e.target.value)}
+              type="text"
               value={text}
+              onChange={(e) => setText(e.target.value)}
               placeholder="Digite o nome da tarefa..."
+              autoFocus
             />
 
-            {/* Botões lado a lado */}
             <div className="modalButtons">
               <button
                 className="addBtn"
@@ -93,16 +107,18 @@ export default function Column({ state }) {
   );
 }
 
+// Hook auxiliar (mantido para debug/monitoramento)
 function RefTest() {
   const ref = useRef();
 
   useEffect(() => {
-    useStore.subscribe(
+    const unsubscribe = useStore.subscribe(
       (store) => store.tasks,
       (tasks) => {
         ref.current = tasks;
       }
     );
+    return () => unsubscribe();
   }, []);
 
   return ref.current;
