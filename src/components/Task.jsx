@@ -7,8 +7,17 @@ export default function Task({ title }) {
   const task = useStore((store) =>
     store.tasks.find((task) => task.title === title)
   );
+
   const setDraggedTask = useStore((store) => store.setDraggedTask);
   const deleteTask = useStore((store) => store.deleteTask);
+
+  if (!task) return null;
+
+  // 🕒 Formata data e hora
+  const formattedDate = new Date(task.createdAt).toLocaleString('pt-BR', {
+    dateStyle: 'short',
+    timeStyle: 'short',
+  });
 
   return (
     <div
@@ -16,12 +25,22 @@ export default function Task({ title }) {
       draggable
       onDragStart={() => setDraggedTask(task.title)}
     >
-      <div>{task.title}</div>
+      {/* Título */}
+      <div className="taskTitle">{task.title}</div>
+
+      {/* Rodapé */}
       <div className="bottomWrapper">
-        <div>
-          <img src={trash} onClick={() => deleteTask(task.title)} />
+        <small className="taskDate">{formattedDate}</small>
+
+        <div className={classNames('status', task.state)}>
+          {task.state}
         </div>
-        <div className={classNames('status', task.state)}>{task.state}</div>
+
+        <img
+          src={trash}
+          alt="Excluir tarefa"
+          onClick={() => deleteTask(task.title)}
+        />
       </div>
     </div>
   );

@@ -1,7 +1,7 @@
 import { useStore } from '../store';
 import Task from './Task';
 import './Column.css';
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState } from 'react';
 import classNames from 'classnames';
 import { shallow } from 'zustand/shallow';
 
@@ -10,8 +10,22 @@ export default function Column({ state }) {
   const [open, setOpen] = useState(false);
   const [drop, setDrop] = useState(false);
 
+  // 🔒 NORMALIZA O STATE (ESSENCIAL)
+  const normalizedState = state.trim().toUpperCase();
+
+  // 🔹 Mensagens vazias por coluna
+  const emptyMessages = {
+    PLANEJADO: 'Nenhuma atividade pendente',
+    ANDAMENTO: 'Nenhuma atividade em andamento',
+    FEITO: 'Nenhuma atividade feita',
+  };
+
+  // 🔎 Filtra tasks usando state normalizado
   const tasks = useStore(
-    (store) => store.tasks.filter((task) => task.state === state),
+    (store) =>
+      store.tasks.filter(
+        (task) => task.state.trim().toUpperCase() === normalizedState
+      ),
     shallow
   );
 
@@ -20,7 +34,7 @@ export default function Column({ state }) {
   const draggedTask = useStore((store) => store.draggedTask);
   const moveTask = useStore((store) => store.moveTask);
 
-  // Fecha o modal com tecla ESC
+  // Fecha o modal com ESC
   useEffect(() => {
     const handleEsc = (e) => e.key === 'Escape' && setOpen(false);
     window.addEventListener('keydown', handleEsc);
@@ -37,37 +51,37 @@ export default function Column({ state }) {
       onDragLeave={() => setDrop(false)}
       onDrop={() => {
         setDrop(false);
-        moveTask(draggedTask, state);
+        moveTask(draggedTask, normalizedState);
         setDraggedTask(null);
       }}
     >
-      {/* Cabeçalho da coluna */}
+      {/* Cabeçalho */}
       <div className="titleWrapper">
-        <p>{state}</p>
-        <button
-          onClick={() => setOpen(true)}
-          aria-label="Adicionar tarefa"
-          title="Adicionar tarefa"
-        >
+        <p>{normalizedState}</p>
+        <button onClick={() => setOpen(true)} aria-label="Adicionar tarefa">
           +
         </button>
       </div>
 
-      {/* Lista de tarefas */}
+      {/* Lista */}
       <div className="tasksList">
-        {tasks.length > 0 ? (
-          tasks.map((task) => <Task title={task.title} key={task.title} />)
-        ) : (
-          <p className="emptyState">Nenhuma tarefa ainda...</p>
+        {tasks.length === 0 && (
+          <div className="emptyState">
+            {emptyMessages[normalizedState] || 'Nenhuma atividade'}
+          </div>
         )}
+
+        {tasks.map((task) => (
+          <Task key={task.title} title={task.title} />
+        ))}
       </div>
 
-      {/* Modal de nova tarefa */}
+      {/* Modal */}
       {open && (
         <div className="Modal" onClick={() => setOpen(false)}>
           <div
             className="modalContent"
-            onClick={(e) => e.stopPropagation()} // Evita fechar clicando dentro
+            onClick={(e) => e.stopPropagation()}
           >
             <h3 className="modalTitle">Adicionar nova tarefa</h3>
 
@@ -83,8 +97,8 @@ export default function Column({ state }) {
               <button
                 className="addBtn"
                 onClick={() => {
-                  if (text.trim() !== '') {
-                    addTask(text, state);
+                  if (text.trim()) {
+                    addTask(text, normalizedState);
                     setText('');
                     setOpen(false);
                   }
@@ -105,21 +119,4 @@ export default function Column({ state }) {
       )}
     </div>
   );
-}
-
-// Hook auxiliar (mantido para debug/monitoramento)
-function RefTest() {
-  const ref = useRef();
-
-  useEffect(() => {
-    const unsubscribe = useStore.subscribe(
-      (store) => store.tasks,
-      (tasks) => {
-        ref.current = tasks;
-      }
-    );
-    return () => unsubscribe();
-  }, []);
-
-  return ref.current;
 }

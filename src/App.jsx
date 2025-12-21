@@ -1,12 +1,12 @@
 import './App.css';
-import Column from './components/Column';
+import Board from './components/Board';
+import Navbar from './components/Navbar';
 
 function App() {
   return (
     <div className="App">
-      <Column state="PLANEJADO" />
-      <Column state="ANDAMENTO" />
-      <Column state="FEITO" />
+      <Navbar />
+      <Board />
     </div>
   );
 }
