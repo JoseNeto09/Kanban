@@ -11,7 +11,7 @@ export default function Navbar() {
       {/* Links */}
       <div className="navbar-links">
         <a
-          href="https://github.com/SEU_USUARIO"
+          href="https://github.com/JoseNeto09"
           target="_blank"
           rel="noopener noreferrer"
         >
