@@ -227,12 +227,13 @@
 /* 📱 Mobile pequeno */
 @media (max-width: 400px) {
   .Modal {
+    margin-top: 150px;
     padding: 0.5rem;
   }
 
   .modalContent {
     max-height: 95vh;
-    padding: 1rem;
+    padding: 2rem;
   }
 
   .titleWrapper p {
