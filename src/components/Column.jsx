@@ -59,7 +59,7 @@ export default function Column({ state }) {
       <div className="titleWrapper">
         <p>{normalizedState}</p>
         <button onClick={() => setOpen(true)} aria-label="Adicionar tarefa">
-          +
+          Adicionar
         </button>
       </div>
 
