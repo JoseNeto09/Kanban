@@ -12,7 +12,7 @@ front: Reactjs
 Clone o projeto
 
 ```bash
-  git clone https://github.com/JoseNeto09/myKanban
+  git clone https://github.com/JoseNeto09/kanban
 ```
 
 Entre no diretório do projeto
