@@ -1,11 +1,11 @@
-import './Navbar.css';
+import "./Navbar.css";
+import logo from "../assets/logo.png";
 
 export default function Navbar() {
   return (
     <nav className="navbar">
-      {/* Logo */}
       <div className="navbar-logo">
-        <span>Kanban</span>
+        <img src={logo} alt="Logo Kanban" className="navbar-img" />
       </div>
 
       {/* Links */}

@@ -48,3 +48,8 @@
   background: #333;
   transform: scale(1.05);
 }
+
+.navbar-img{
+  width: 90px;
+  padding-top: 10px; 
+}
