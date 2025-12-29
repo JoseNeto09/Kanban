@@ -36,7 +36,10 @@ export default function Column({ state }) {
 
   // Fecha o modal com ESC
   useEffect(() => {
-    const handleEsc = (e) => e.key === 'Escape' && setOpen(false);
+    const handleEsc = (e) => {
+      if (e.key === 'Escape') setOpen(false);
+    };
+
     window.addEventListener('keydown', handleEsc);
     return () => window.removeEventListener('keydown', handleEsc);
   }, []);
@@ -72,7 +75,7 @@ export default function Column({ state }) {
         )}
 
         {tasks.map((task) => (
-          <Task key={task.title} title={task.title} />
+          <Task key={task._id} title={task.title} />
         ))}
       </div>
 
@@ -96,12 +99,13 @@ export default function Column({ state }) {
             <div className="modalButtons">
               <button
                 className="addBtn"
-                onClick={() => {
-                  if (text.trim()) {
-                    addTask(text, normalizedState);
-                    setText('');
-                    setOpen(false);
-                  }
+                onClick={async () => {
+                  if (!text.trim()) return;
+
+                  await addTask(text, normalizedState);
+
+                  setText('');
+                  setOpen(false);
                 }}
               >
                 Adicionar
