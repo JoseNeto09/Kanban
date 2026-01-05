@@ -21,15 +21,17 @@ export default function Column({ state }) {
   const tasks = useStore(
     (store) =>
       store.tasks.filter(
-        (task) => task.status?.trim().toUpperCase() === normalizedState
+        (task) =>
+          task.status &&
+          task.status.trim().toUpperCase() === normalizedState
       ),
     shallow
   );
 
-  const addTask = useStore((store) => store.addTask);
-  const setDraggedTask = useStore((store) => store.setDraggedTask);
-  const draggedTask = useStore((store) => store.draggedTask);
-  const moveTask = useStore((store) => store.moveTask);
+  const addTask = useStore((s) => s.addTask);
+  const setDraggedTask = useStore((s) => s.setDraggedTask);
+  const draggedTask = useStore((s) => s.draggedTask);
+  const moveTask = useStore((s) => s.moveTask);
 
   useEffect(() => {
     const handleEsc = (e) => e.key === 'Escape' && setOpen(false);
@@ -46,16 +48,19 @@ export default function Column({ state }) {
       }}
       onDragLeave={() => setDrop(false)}
       onDrop={() => {
+        if (!draggedTask) return;
         setDrop(false);
         moveTask(draggedTask, normalizedState);
         setDraggedTask(null);
       }}
     >
+      {/* Cabeçalho */}
       <div className="titleWrapper">
         <p>{normalizedState}</p>
         <button onClick={() => setOpen(true)}>Adicionar</button>
       </div>
 
+      {/* Lista */}
       <div className="tasksList">
         {tasks.length === 0 && (
           <div className="emptyState">
@@ -68,9 +73,13 @@ export default function Column({ state }) {
         ))}
       </div>
 
+      {/* Modal */}
       {open && (
         <div className="Modal" onClick={() => setOpen(false)}>
-          <div className="modalContent" onClick={(e) => e.stopPropagation()}>
+          <div
+            className="modalContent"
+            onClick={(e) => e.stopPropagation()}
+          >
             <h3>Adicionar nova tarefa</h3>
 
             <input
