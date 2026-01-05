@@ -3,17 +3,10 @@ import { useStore } from '../store';
 import './Task.css';
 import trash from '../assets/trash-2.svg';
 
-export default function Task({ title }) {
-  const task = useStore((store) =>
-    store.tasks.find((task) => task.title === title)
-  );
+export default function Task({ task }) {
+  const setDraggedTask = useStore((s) => s.setDraggedTask);
+  const deleteTask = useStore((s) => s.deleteTask);
 
-  const setDraggedTask = useStore((store) => store.setDraggedTask);
-  const deleteTask = useStore((store) => store.deleteTask);
-
-  if (!task) return null;
-
-  // 🕒 Formata data e hora
   const formattedDate = new Date(task.createdAt).toLocaleString('pt-BR', {
     dateStyle: 'short',
     timeStyle: 'short',
@@ -23,23 +16,21 @@ export default function Task({ title }) {
     <div
       className="task"
       draggable
-      onDragStart={() => setDraggedTask(task.title)}
+      onDragStart={() => setDraggedTask(task)}
     >
-      {/* Título */}
       <div className="taskTitle">{task.title}</div>
 
-      {/* Rodapé */}
       <div className="bottomWrapper">
-        <small className="taskDate">{formattedDate}</small>
+        <small>{formattedDate}</small>
 
-        <div className={classNames('status', task.state)}>
-          {task.state}
+        <div className={classNames('status', task.status)}>
+          {task.status}
         </div>
 
         <img
           src={trash}
-          alt="Excluir tarefa"
-          onClick={() => deleteTask(task.title)}
+          alt="Excluir"
+          onClick={() => deleteTask(task._id)}
         />
       </div>
     </div>

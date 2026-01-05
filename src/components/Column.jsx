@@ -10,21 +10,18 @@ export default function Column({ state }) {
   const [open, setOpen] = useState(false);
   const [drop, setDrop] = useState(false);
 
-  // 🔒 NORMALIZA O STATE (ESSENCIAL)
   const normalizedState = state.trim().toUpperCase();
 
-  // 🔹 Mensagens vazias por coluna
   const emptyMessages = {
-    PLANEJADO: 'Nenhuma atividade pendente',
+    PENDENTE: 'Nenhuma atividade pendente',
     ANDAMENTO: 'Nenhuma atividade em andamento',
     FEITO: 'Nenhuma atividade feita',
   };
 
-  // 🔎 Filtra tasks usando state normalizado
   const tasks = useStore(
     (store) =>
       store.tasks.filter(
-        (task) => task.state.trim().toUpperCase() === normalizedState
+        (task) => task.status?.trim().toUpperCase() === normalizedState
       ),
     shallow
   );
@@ -34,12 +31,8 @@ export default function Column({ state }) {
   const draggedTask = useStore((store) => store.draggedTask);
   const moveTask = useStore((store) => store.moveTask);
 
-  // Fecha o modal com ESC
   useEffect(() => {
-    const handleEsc = (e) => {
-      if (e.key === 'Escape') setOpen(false);
-    };
-
+    const handleEsc = (e) => e.key === 'Escape' && setOpen(false);
     window.addEventListener('keydown', handleEsc);
     return () => window.removeEventListener('keydown', handleEsc);
   }, []);
@@ -58,52 +51,40 @@ export default function Column({ state }) {
         setDraggedTask(null);
       }}
     >
-      {/* Cabeçalho */}
       <div className="titleWrapper">
         <p>{normalizedState}</p>
-        <button onClick={() => setOpen(true)} aria-label="Adicionar tarefa">
-          Adicionar
-        </button>
+        <button onClick={() => setOpen(true)}>Adicionar</button>
       </div>
 
-      {/* Lista */}
       <div className="tasksList">
         {tasks.length === 0 && (
           <div className="emptyState">
-            {emptyMessages[normalizedState] || 'Nenhuma atividade'}
+            {emptyMessages[normalizedState]}
           </div>
         )}
 
         {tasks.map((task) => (
-          <Task key={task._id} title={task.title} />
+          <Task key={task._id} task={task} />
         ))}
       </div>
 
-      {/* Modal */}
       {open && (
         <div className="Modal" onClick={() => setOpen(false)}>
-          <div
-            className="modalContent"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <h3 className="modalTitle">Adicionar nova tarefa</h3>
+          <div className="modalContent" onClick={(e) => e.stopPropagation()}>
+            <h3>Adicionar nova tarefa</h3>
 
             <input
-              type="text"
               value={text}
               onChange={(e) => setText(e.target.value)}
-              placeholder="Digite o nome da tarefa..."
+              placeholder="Digite o nome da tarefa"
               autoFocus
             />
 
             <div className="modalButtons">
               <button
-                className="addBtn"
                 onClick={async () => {
                   if (!text.trim()) return;
-
                   await addTask(text, normalizedState);
-
                   setText('');
                   setOpen(false);
                 }}
@@ -111,12 +92,7 @@ export default function Column({ state }) {
                 Adicionar
               </button>
 
-              <button
-                className="closeBtn"
-                onClick={() => setOpen(false)}
-              >
-                Fechar
-              </button>
+              <button onClick={() => setOpen(false)}>Fechar</button>
             </div>
           </div>
         </div>
