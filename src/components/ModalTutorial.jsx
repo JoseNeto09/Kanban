@@ -34,6 +34,7 @@ export default function ModalTutorial() {
     },
   ];
 
+  if (!open) return null;
 
   const nextStep = () => {
     setDirection('next');

@@ -5,8 +5,11 @@
   display: flex;
   flex-direction: row;
   justify-content: center;
-  align-items: stretch; /* 🔴 colunas com mesma altura */
-  gap: 1rem;
+  align-items: stretch;
+
+  gap: clamp(1rem, 3vw, 2.5rem);           /* 🔥 gap estilo Trello */
+  padding-inline: clamp(1rem, 4vw, 3rem); /* 🔥 respiro lateral */
+
   width: 100%;
   box-sizing: border-box;
   margin-top: 25px;
@@ -19,53 +22,26 @@
   display: flex;
   flex-direction: column;
 
-  background: var(--COLOR-GRAY-DARK);
+  background: #1f1f1f; /* fundo mais suave */
   color: #fff;
 
   flex: 1 1 300px;
   max-width: 20rem;
-  min-height: 22rem;
+  min-height: 26rem;
 
-  border-radius: 8px;
-  padding: 0.6rem;
+  border-radius: 12px;
+  padding: 0.8rem;
   margin: 0;
 
-  border: 3px dashed transparent;
-  transition: border-color 0.2s ease, transform 0.15s ease;
+  border: 2px dashed transparent;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35);
+
+  transition: box-shadow 0.2s ease, transform 0.15s ease;
   box-sizing: border-box;
-}
-
-/* ========================= */
-/* INPUT DO MODAL            */
-/* ========================= */
-.modalContent input {
-  width: 100%;                 /* 🔴 ocupa toda a largura */
-  min-height: 3rem;            /* 🔴 input mais alto */
-  padding: 0.7rem 0.9rem;
-
-  border-radius: 8px;
-  border: none;
-  outline: none;
-
-  font-size: 0.95rem;
-  background: #2a2a2a;
-  color: #fff;
-
-  box-sizing: border-box;
-}
-
-/* Placeholder */
-.modalContent input::placeholder {
-  color: #aaa;
-}
-
-/* Foco */
-.modalContent input:focus {
-  outline: 2px solid #ffffff;
 }
 
 .column.drop {
-  border-color: #ffffff;
+  box-shadow: 0 0 0 2px #ffffff inset, 0 10px 25px rgba(0, 0, 0, 0.45);
   transform: scale(1.02);
 }
 
@@ -78,37 +54,40 @@
   align-items: center;
 
   gap: 0.5rem;
-  padding-bottom: 0.6rem;
+  padding-bottom: 0.8rem;
+  margin-bottom: 0.4rem;
+
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .titleWrapper p {
   font-weight: 600;
   margin: 0;
-  font-size: 0.95rem;
+  font-size: 0.85rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  opacity: 0.85;
 }
 
-/* Botão + */
+/* Botão adicionar (estilo Trello) */
 .titleWrapper button {
   all: unset;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  background: #ffffff;
-  color: #000;
-  padding: 0.4rem 0.7rem;
-  border-radius: 6px;
   cursor: pointer;
 
-  font-size: 0.9rem;
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+
+  padding: 0.3rem 0.6rem;
+  border-radius: 6px;
+
+  font-size: 0.8rem;
   font-weight: 600;
 
-  transition: transform 0.15s ease, background 0.15s ease;
+  transition: background 0.15s ease;
 }
 
 .titleWrapper button:hover {
-  transform: scale(1.05);
-  background: #f1f1f1;
+  background: rgba(255, 255, 255, 0.2);
 }
 
 /* ========================= */
@@ -117,11 +96,11 @@
 .tasksList {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 0.7rem;
 
   flex: 1;
-  overflow-y: auto; /* 🔴 rolagem interna */
-  padding-right: 0.2rem;
+  overflow-y: auto;
+  padding-right: 0.3rem;
 }
 
 /* ========================= */
@@ -132,11 +111,11 @@
   align-items: center;
   justify-content: center;
 
-  height: 100%; /* 🔴 ESSENCIAL */
+  height: 100%;
   width: 100%;
 
-  font-size: 0.85rem;
-  color: #b0b0b0;
+  font-size: 0.8rem;
+  color: #a0a0a0;
   font-style: italic;
 
   text-align: center;
@@ -182,6 +161,45 @@
 }
 
 /* ========================= */
+/* INPUT E TEXTAREA          */
+/* ========================= */
+.modalContent input,
+.modalContent textarea {
+  width: 100%;
+  padding: 0.7rem 0.9rem;
+
+  border-radius: 8px;
+  border: none;
+  outline: none;
+
+  font-size: 0.95rem;
+  background: #2a2a2a;
+  color: #fff;
+
+  box-sizing: border-box;
+}
+
+.modalContent input {
+  min-height: 3rem;
+}
+
+.modalContent textarea {
+  min-height: 6.5rem;
+  resize: vertical;
+  line-height: 1.4;
+}
+
+.modalContent input::placeholder,
+.modalContent textarea::placeholder {
+  color: #aaa;
+}
+
+.modalContent input:focus,
+.modalContent textarea:focus {
+  outline: 2px solid #ffffff;
+}
+
+/* ========================= */
 /* BOTÕES DO MODAL           */
 /* ========================= */
 .modalButtons {
@@ -194,6 +212,8 @@
   padding: 0.65rem 1rem;
   border-radius: 6px;
   border: none;
+
+  background: #ffffff;
   color: #000;
   cursor: pointer;
 
@@ -212,7 +232,6 @@
 @media (max-width: 900px) {
   .columns-container {
     flex-direction: column;
-    align-items: stretch;
   }
 
   .column {
@@ -233,10 +252,10 @@
 
   .modalContent {
     max-height: 95vh;
-    padding: 2rem;
+    padding: 1.6rem;
   }
 
   .titleWrapper p {
-    font-size: 0.9rem;
+    font-size: 0.8rem;
   }
 }

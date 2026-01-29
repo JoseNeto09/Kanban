@@ -6,7 +6,8 @@ import classNames from 'classnames';
 import { shallow } from 'zustand/shallow';
 
 export default function Column({ state }) {
-  const [text, setText] = useState('');
+  const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
   const [open, setOpen] = useState(false);
   const [drop, setDrop] = useState(false);
 
@@ -83,18 +84,28 @@ export default function Column({ state }) {
             <h3>Adicionar nova tarefa</h3>
 
             <input
-              value={text}
-              onChange={(e) => setText(e.target.value)}
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
               placeholder="Digite o nome da tarefa"
               autoFocus
+            />
+
+            <textarea
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              placeholder="Descrição da atividade"
+              rows={4}
             />
 
             <div className="modalButtons">
               <button
                 onClick={async () => {
-                  if (!text.trim()) return;
-                  await addTask(text, normalizedState);
-                  setText('');
+                  if (!title.trim()) return;
+
+                  await addTask(title, description, normalizedState);
+
+                  setTitle('');
+                  setDescription('');
                   setOpen(false);
                 }}
               >
