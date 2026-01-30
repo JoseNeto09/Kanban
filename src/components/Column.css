@@ -3,16 +3,15 @@
 /* ========================= */
 .columns-container {
   display: flex;
-  flex-direction: row;
   justify-content: center;
   align-items: stretch;
 
-  gap: clamp(1rem, 3vw, 2.5rem);           /* 🔥 gap estilo Trello */
-  padding-inline: clamp(1rem, 4vw, 3rem); /* 🔥 respiro lateral */
+  gap: clamp(1rem, 3vw, 2.5rem);
+  padding-inline: clamp(1rem, 4vw, 3rem);
 
   width: 100%;
-  box-sizing: border-box;
   margin-top: 25px;
+  box-sizing: border-box;
 }
 
 /* ========================= */
@@ -22,26 +21,33 @@
   display: flex;
   flex-direction: column;
 
-  background: #1f1f1f; /* fundo mais suave */
-  color: #fff;
+  background: var(--bg-surface);
+  color: var(--text-primary);
+
+  border: 1px solid var(--border-soft);
+  border-radius: 12px;
 
   flex: 1 1 300px;
   max-width: 20rem;
   min-height: 26rem;
-
-  border-radius: 12px;
   padding: 0.8rem;
-  margin: 0;
 
-  border: 2px dashed transparent;
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35);
-
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
   transition: box-shadow 0.2s ease, transform 0.15s ease;
-  box-sizing: border-box;
 }
 
+/* Light mode: sombra mais leve */
+body[data-theme="light"] .column {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+}
+
+/* ========================= */
+/* DRAG & DROP               */
+/* ========================= */
 .column.drop {
-  box-shadow: 0 0 0 2px #ffffff inset, 0 10px 25px rgba(0, 0, 0, 0.45);
+  box-shadow:
+    0 0 0 2px var(--text-primary) inset,
+    0 10px 25px rgba(0, 0, 0, 0.35);
   transform: scale(1.02);
 }
 
@@ -57,25 +63,24 @@
   padding-bottom: 0.8rem;
   margin-bottom: 0.4rem;
 
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid var(--border-soft);
 }
 
 .titleWrapper p {
   font-weight: 600;
-  margin: 0;
   font-size: 0.85rem;
   letter-spacing: 0.06em;
   text-transform: uppercase;
   opacity: 0.85;
 }
 
-/* Botão adicionar (estilo Trello) */
+/* Botão adicionar */
 .titleWrapper button {
   all: unset;
   cursor: pointer;
 
-  background: rgba(255, 255, 255, 0.12);
-  color: #fff;
+  background: var(--bg-button);
+  color: var(--text-primary);
 
   padding: 0.3rem 0.6rem;
   border-radius: 6px;
@@ -87,7 +92,7 @@
 }
 
 .titleWrapper button:hover {
-  background: rgba(255, 255, 255, 0.2);
+  background: var(--bg-button-hover);
 }
 
 /* ========================= */
@@ -115,10 +120,10 @@
   width: 100%;
 
   font-size: 0.8rem;
-  color: #a0a0a0;
+  color: var(--text-secondary);
   font-style: italic;
-
   text-align: center;
+
   pointer-events: none;
 }
 
@@ -149,17 +154,16 @@
   max-width: 22rem;
   max-height: 90vh;
 
-  background: #1e1e1e;
-  color: #f5f5f5;
+  background: var(--bg-surface);
+  color: var(--text-primary);
 
   border-radius: 14px;
   padding: 1.2rem;
   gap: 0.8rem;
 
   overflow-y: auto;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
 }
-
 /* ========================= */
 /* INPUT E TEXTAREA          */
 /* ========================= */
@@ -169,35 +173,35 @@
   padding: 0.7rem 0.9rem;
 
   border-radius: 8px;
-  border: none;
+  border: 1px solid var(--border-soft);
   outline: none;
 
   font-size: 0.95rem;
-  background: #2a2a2a;
-  color: #fff;
+  background: var(--bg-input);
+  color: var(--text-primary);
 
   box-sizing: border-box;
 }
 
-.modalContent input {
-  min-height: 3rem;
-}
-
+/* 🔒 textarea: trava lateral, cresce só para baixo */
 .modalContent textarea {
-  min-height: 6.5rem;
-  resize: vertical;
-  line-height: 1.4;
+  resize: vertical;     /* permite só crescer pra baixo */
+  min-height: 90px;     /* altura inicial controlada */
+  max-width: 100%;      /* impede quebrar layout */
 }
 
+/* PLACEHOLDER */
 .modalContent input::placeholder,
 .modalContent textarea::placeholder {
-  color: #aaa;
+  color: var(--text-secondary);
 }
 
+/* FOCO */
 .modalContent input:focus,
 .modalContent textarea:focus {
-  outline: 2px solid #ffffff;
+  outline: 2px solid var(--text-primary);
 }
+
 
 /* ========================= */
 /* BOTÕES DO MODAL           */
@@ -210,14 +214,16 @@
 .modalButtons button {
   flex: 1;
   padding: 0.65rem 1rem;
+
   border-radius: 6px;
   border: none;
 
-  background: #ffffff;
-  color: #000;
-  cursor: pointer;
+  background: var(--btn-primary);
+  color: var(--btn-text);
 
+  cursor: pointer;
   font-weight: 600;
+
   transition: transform 0.15s ease, opacity 0.15s ease;
 }
 
@@ -243,10 +249,8 @@
   }
 }
 
-/* 📱 Mobile pequeno */
 @media (max-width: 400px) {
   .Modal {
-    margin-top: 150px;
     padding: 0.5rem;
   }
 

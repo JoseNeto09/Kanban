@@ -9,9 +9,18 @@ export default function Task({ task }) {
 
   if (!task) return null;
 
-  const formattedDate = new Date(task.createdAt).toLocaleString('pt-BR', {
-    dateStyle: 'short',
-    timeStyle: 'short',
+  const date = new Date(task.createdAt);
+
+  const formattedDate = date.toLocaleDateString('pt-BR', {
+    weekday: 'short',   // seg., ter., qua...
+    day: '2-digit',
+    month: '2-digit',
+    year: 'numeric',
+  });
+
+  const formattedTime = date.toLocaleTimeString('pt-BR', {
+    hour: '2-digit',
+    minute: '2-digit',
   });
 
   return (
@@ -25,7 +34,9 @@ export default function Task({ task }) {
 
       {/* Rodapé */}
       <div className="bottomWrapper">
-        <small className="taskDate">{formattedDate}</small>
+        <small className="taskDate">
+          {formattedDate} • {formattedTime}
+        </small>
 
         <div
           className={classNames(

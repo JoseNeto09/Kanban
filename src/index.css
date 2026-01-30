@@ -1,14 +1,73 @@
+/* ========================= */
+/* RESET / BASE              */
+/* ========================= */
+* {
+  box-sizing: border-box;
+  margin: 0;
+}
+
+body {
+  font-family: Helvetica, Arial, sans-serif;
+  background-color: var(--bg-page);
+  color: var(--text-primary);
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+/* ========================= */
+/* VARIÁVEIS GLOBAIS (DARK)  */
+/* ========================= */
 :root {
+  /* STATUS */
   --COLOR-GRAY: #333333;
   --COLOR-GRAY-DARK: #222222;
   --COLOR-GRAY-LIGHT: #cccccc;
   --COLOR-ANDAMENTO: #98c1d9;
   --COLOR-FEITO: #ee6c4d;
-  font-family: Helvetica;
+
+  /* BACKGROUNDS */
+  --bg-page: #121212;
+  --bg-navbar: #1e1e1e;
+  --bg-surface: #1f1f1f;
+  --bg-surface-2: #1e1e1e;
+  --bg-input: #2a2a2a;
+
+  /* TEXTOS */
+  --text-primary: #ffffff;
+  --text-secondary: #a0a0a0;
+
+  /* BORDAS */
+  --border-soft: rgba(255, 255, 255, 0.08);
+
+  /* BOTÕES */
+  --bg-button: rgba(255, 255, 255, 0.12);
+  --bg-button-hover: rgba(255, 255, 255, 0.2);
+
+  --btn-primary: #ffffff;
+  --btn-text: #000000;
 }
 
+/* ========================= */
+/* TEMA CLARO                */
+/* ========================= */
+body[data-theme="light"] {
+  /* BACKGROUNDS */
+  --bg-page: #ffffff;
+  --bg-navbar: #ffffff;
+  --bg-surface: #ffffff;
+  --bg-surface-2: #ffffff;
+  --bg-input: #f2f2f2;
 
-* {
-  box-sizing: border-box;
-  margin: 0;
+  /* TEXTOS */
+  --text-primary: #1e1e1e;
+  --text-secondary: #666666;
+
+  /* BORDAS (visíveis no light) */
+  --border-soft: rgba(0, 0, 0, 0.25);
+
+  /* BOTÕES */
+  --bg-button: rgba(0, 0, 0, 0.08);
+  --bg-button-hover: rgba(0, 0, 0, 0.15);
+
+  --btn-primary: #1e1e1e;
+  --btn-text: #ffffff;
 }
