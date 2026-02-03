@@ -2,20 +2,25 @@
   display: flex;
   justify-content: center;
   align-items: flex-start;
-
   width: 100%;
-  min-height: 100vh;
-  background: #121212;
+
+  /* cobre toda a área abaixo da navbar */
+  min-height: calc(100vh - var(--navbar-height, 64px));
+  background-color: var(--bg-page);
 }
 
 .columns-container {
   display: flex;
   flex-wrap: wrap;
-  gap: 1rem;
+  gap: 3rem;
   padding: 1rem;
 
   width: 100%;
   max-width: 1400px;
+
+  /* garante que não exista faixa superior */
+  margin-top: 45px;
+  background-color: transparent;
 }
 
 /* Mobile */

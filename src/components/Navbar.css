@@ -20,8 +20,12 @@
   box-sizing: border-box;
   z-index: 1000;
 
+  /* Borda preta */
+  border-bottom: 1px solid #c0c0c0;
+
   transition: background-color 0.25s ease, color 0.25s ease;
 }
+
 
 /* ========================= */
 /* LOGO                      */
@@ -33,13 +37,11 @@
 }
 
 .navbar-img {
-  height: 52px;              /* 🔑 controla o tamanho real */
+  height: 52px;  
   width: auto;
   object-fit: contain;
-
   padding-top: 0;
   user-select: none;
-
   transition: filter 0.25s ease, transform 0.2s ease;
 }
 
@@ -66,7 +68,6 @@
   color: var(--text-color);
   display: flex;
   align-items: center;
-
   transition: transform 0.2s ease, color 0.2s ease;
 }
 

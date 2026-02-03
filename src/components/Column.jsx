@@ -111,7 +111,6 @@ export default function Column({ state }) {
               >
                 Adicionar
               </button>
-
               <button onClick={() => setOpen(false)}>Fechar</button>
             </div>
           </div>
