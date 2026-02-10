@@ -1,5 +1,5 @@
-import { useStore } from '../store';
-import Task from './Task';
+import { useStore } from '../../store';
+import Task from '../Task/Task';
 import './Column.css';
 import { useEffect, useState } from 'react';
 import classNames from 'classnames';

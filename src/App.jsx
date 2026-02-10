@@ -2,10 +2,10 @@ import './App.css';
 import { useEffect } from 'react';
 import { useStore } from './store';
 
-import Board from './components/Board';
-import Navbar from './components/Navbar';
-import ModalTutorial from './components/ModalTutorial';
-import Footer from './components/Footer';
+import Board from './components/Board/Board';
+import Navbar from './components/Navbar/Navbar';
+import ModalTutorial from './components/ModalTutorial/ModalTutorial';
+import Footer from './components/Footer/Footer';
 
 
 function App() {

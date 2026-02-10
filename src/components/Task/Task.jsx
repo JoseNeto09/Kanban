@@ -1,7 +1,7 @@
 import classNames from 'classnames';
-import { useStore } from '../store';
-import './Task.css';
-import trash from '../assets/trash-2.svg';
+import { useStore } from '../../store';
+import '../Task/Task.css';
+import trash from '../../assets/trash-2.svg';
 
 export default function Task({ task }) {
   const setDraggedTask = useStore((s) => s.setDraggedTask);

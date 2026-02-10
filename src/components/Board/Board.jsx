@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
-import { useStore } from '../store';
-import Column from '../components/Column';
+import { useStore } from '../../store';
+import Column from '../Column/Column';
 import './Board.css';
 
 export default function Board() {

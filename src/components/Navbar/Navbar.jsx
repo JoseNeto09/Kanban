@@ -1,6 +1,6 @@
 import "./Navbar.css";
-import logoDark from "../assets/logo.png";
-import logoLight from "../../dist/assets/logo_branca.png";
+import logoDark from "../../assets/logo.png";
+import logoLight from "../../../dist/assets/logo_branca.png";
 
 import { VscGithubAlt } from "react-icons/vsc";
 import { BsSun, BsMoon } from "react-icons/bs";
