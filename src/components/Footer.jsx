@@ -5,7 +5,7 @@ export default function Footer() {
     <footer className="kanban-footer">
       <div className="footer-content">
         <span className="footer-text">
-          © {new Date().getFullYear()} Kanban •{" "}
+          © Kanban Desenvolvido Por •{" "}
           <strong>José Neto</strong>
         </span>
 
