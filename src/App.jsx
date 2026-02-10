@@ -4,7 +4,6 @@ import { useStore } from './store';
 
 import Board from './components/Board/Board';
 import Navbar from './components/Navbar/Navbar';
-import ModalTutorial from './components/ModalTutorial/ModalTutorial';
 import Footer from './components/Footer/Footer';
 
 
@@ -18,7 +17,6 @@ function App() {
 
   return (
     <div className="App">
-      <ModalTutorial />
       <Navbar />
       <Board />
       <Footer />
