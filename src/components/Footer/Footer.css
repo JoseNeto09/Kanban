@@ -1,17 +1,20 @@
+/* ===== BASE (vale pros dois temas) ===== */
 .kanban-footer {
   width: 100%;
   padding: 20px 16px;
-  background: #1e1e1e;
-  color: #cfcfcf;
   position: fixed;
   bottom: 0;
   left: 0;
-  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.3);
   font-size: 0.85rem;
   z-index: 100;
+
+  transition: background-color 0.3s ease,
+              color 0.3s ease,
+              box-shadow 0.3s ease,
+              border-color 0.3s ease;
 }
 
-/* CONTEÚDO CENTRALIZADO EM UMA LINHA */
+/* CONTEÚDO */
 .footer-content {
   display: flex;
   align-items: center;
@@ -43,14 +46,12 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #e5e5e5;
   text-decoration: none;
 
   transition: color 0.2s ease, transform 0.2s ease;
 }
 
 .footer-links a:hover {
-  color: #4ade80;
   transform: translateY(-1px);
 }
 
@@ -58,4 +59,37 @@
   width: 15px;
   height: 15px;
   fill: currentColor;
+}
+
+/* ===== DARK THEME ===== */
+[data-theme="dark"] .kanban-footer {
+  background: #1e1e1e;
+  color: #cfcfcf;
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.3);
+  border-top: none;
+}
+
+[data-theme="dark"] .footer-links a {
+  color: #e5e5e5;
+}
+
+[data-theme="dark"] .footer-links a:hover {
+  color: #4ade80;
+}
+
+/* ===== LIGHT THEME ===== */
+[data-theme="light"] .kanban-footer {
+  background: #f8fafc;
+  color: #0f172a;
+
+  border-top: 1px solid #000; /* BORDA PRETA NO LIGHT */
+  box-shadow: none;
+}
+
+[data-theme="light"] .footer-links a {
+  color: #334155;
+}
+
+[data-theme="light"] .footer-links a:hover {
+  color: #22c55e;
 }
