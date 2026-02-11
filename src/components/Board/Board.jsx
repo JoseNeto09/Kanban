@@ -9,7 +9,7 @@ export default function Board() {
 
   useEffect(() => {
     fetchTasks();
-  }, []);
+  }, [fetchTasks]);
 
   if (loading) {
     return <div className="board-loading">Carregando tarefas...</div>;
@@ -18,9 +18,9 @@ export default function Board() {
   return (
     <div className="board-container">
       <div className="columns-container">
-        <Column state="PENDENTE" />
-        <Column state="ANDAMENTO" />
-        <Column state="FEITO" />
+        <Column state="pendente" />
+        <Column state="andamento" />
+        <Column state="feito" />
       </div>
     </div>
   );

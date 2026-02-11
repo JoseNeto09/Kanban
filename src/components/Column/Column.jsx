@@ -11,20 +11,24 @@ export default function Column({ state }) {
   const [open, setOpen] = useState(false);
   const [drop, setDrop] = useState(false);
 
-  const normalizedState = state.trim().toUpperCase();
+  const normalizedState = state.trim().toLowerCase(); // pendente, andamento, feito
 
   const emptyMessages = {
-    PENDENTE: 'Nenhuma atividade pendente',
-    ANDAMENTO: 'Nenhuma atividade em andamento',
-    FEITO: 'Nenhuma atividade feita',
+    pendente: 'Nenhuma atividade pendente',
+    andamento: 'Nenhuma atividade em andamento',
+    feito: 'Nenhuma atividade feita',
+  };
+
+  const displayNames = {
+    pendente: 'PENDENTE',
+    andamento: 'ANDAMENTO',
+    feito: 'FEITO',
   };
 
   const tasks = useStore(
     (store) =>
       store.tasks.filter(
-        (task) =>
-          task.status &&
-          task.status.trim().toUpperCase() === normalizedState
+        (task) => task.status === normalizedState
       ),
     shallow
   );
@@ -57,7 +61,7 @@ export default function Column({ state }) {
     >
       {/* Cabeçalho */}
       <div className="titleWrapper">
-        <p>{normalizedState}</p>
+        <p>{displayNames[normalizedState]}</p>
         <button onClick={() => setOpen(true)}>Adicionar</button>
       </div>
 

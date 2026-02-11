@@ -7,34 +7,32 @@ export const useStore = create((set) => ({
   draggedTask: null,
   loading: true,
 
-  /* ========================= */
-  /* DRAG                      */
-  /* ========================= */
   setDraggedTask: (task) => set({ draggedTask: task }),
 
-  /* ========================= */
-  /* BUSCAR TASKS              */
-  /* ========================= */
   fetchTasks: async () => {
+    console.log('🔍 Buscando tasks...');
     set({ loading: true });
 
     try {
       const response = await fetch(API_URL);
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      
       const data = await response.json();
+      console.log('📦 Tasks recebidas:', data);
 
       set({
         tasks: Array.isArray(data) ? data : [],
         loading: false,
       });
     } catch (error) {
-      console.error('Erro ao buscar tasks:', error);
-      set({ loading: false });
+      console.error('❌ Erro ao buscar tasks:', error);
+      set({ tasks: [], loading: false });
     }
   },
 
-  /* ========================= */
-  /* ADICIONAR TASK            */
-  /* ========================= */
   addTask: async (title, description, status) => {
     try {
       const response = await fetch(API_URL, {
@@ -43,26 +41,26 @@ export const useStore = create((set) => ({
         body: JSON.stringify({
           title,
           description,
-          status: status.trim().toUpperCase(),
+          status: status.toLowerCase(), // pendente, andamento, feito
         }),
       });
 
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
       const newTask = await response.json();
 
-      // 🔴 segurança
       if (!newTask || !newTask._id) return;
 
       set((store) => ({
         tasks: [...store.tasks, newTask],
       }));
     } catch (error) {
-      console.error('Erro ao adicionar task:', error);
+      console.error('❌ Erro ao adicionar task:', error);
     }
   },
 
-  /* ========================= */
-  /* MOVER TASK                */
-  /* ========================= */
   moveTask: async (task, newStatus) => {
     if (!task) return;
 
@@ -71,9 +69,13 @@ export const useStore = create((set) => ({
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          status: newStatus.trim().toUpperCase(),
+          status: newStatus.toLowerCase(), // pendente, andamento, feito
         }),
       });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
 
       const updatedTask = await response.json();
 
@@ -83,22 +85,23 @@ export const useStore = create((set) => ({
         ),
       }));
     } catch (error) {
-      console.error('Erro ao mover task:', error);
+      console.error('❌ Erro ao mover task:', error);
     }
   },
 
-  /* ========================= */
-  /* REMOVER TASK              */
-  /* ========================= */
   deleteTask: async (id) => {
     try {
-      await fetch(`${API_URL}/${id}`, { method: 'DELETE' });
+      const response = await fetch(`${API_URL}/${id}`, { method: 'DELETE' });
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
 
       set((store) => ({
         tasks: store.tasks.filter((task) => task._id !== id),
       }));
     } catch (error) {
-      console.error('Erro ao deletar task:', error);
+      console.error('❌ Erro ao deletar task:', error);
     }
   },
 }));
