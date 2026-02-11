@@ -32,7 +32,7 @@ export default function Navbar() {
 
       {/* TÍTULO */}
       <div className="navbar-links">
-        <span>Kanban</span>
+        <span>App Kanban</span>
       </div>
 
       {/* AÇÕES */}

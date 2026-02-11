@@ -5,7 +5,7 @@ import { useStore } from './store';
 import Board from './components/Board/Board';
 import Navbar from './components/Navbar/Navbar';
 import Footer from './components/Footer/Footer';
-
+import IntroModal from './components/IntroModal/IntroModal';
 
 function App() {
   const theme = useStore((s) => s.theme); // 'light' ou 'dark'
@@ -18,6 +18,7 @@ function App() {
   return (
     <div className="App">
       <Navbar />
+      <IntroModal /> 
       <Board />
       <Footer />
 
