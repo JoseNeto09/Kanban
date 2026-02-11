@@ -23,9 +23,9 @@ export default function IntroModal() {
         <div className="intro-text">
           <h2>Bem-vindo ao MyKanban 👋</h2>
           <p>
-            Crie e Organize suas tarefas de forma simples e visual.
-            <br />
-            <strong>Arraste os cards</strong> entre as colunas para mudar o status.
+            <strong>Crie e organize suas tarefas de forma simples e visual.
+                    Arraste os cards entre as colunas para alterar o status da atividade.<br/>
+                    Para salvar e acessar suas tarefas depois, faça login com sua conta Google.</strong>
           </p>
         </div>
 

@@ -12,8 +12,8 @@
 /* MODAL (DIV) */
 .intro-modal {
   width: 90%;
-  max-width: 720px;
-  padding: 24px;
+  max-width: 520px;
+  padding: 40px;
   border-radius: 14px;
   position: relative;
   text-align: center;
@@ -43,7 +43,8 @@
 }
 
 .intro-text p {
-  line-height: 1.5;
+  line-height: 2.0;
+  text-align: justify;
 }
 
 /* GIF */
