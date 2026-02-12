@@ -1,5 +1,5 @@
 import "./IntroModal.css";
-/* import dragGif from "../../assets/drag-drop.gif"; */
+import dragGif from "../../assets/drag-Gif.gif";
 import { useState } from "react";
 
 export default function IntroModal() {
@@ -21,7 +21,7 @@ export default function IntroModal() {
 
         {/* TEXTO */}
         <div className="intro-text">
-          <h2>Bem-vindo ao MyKanban 👋</h2>
+          <h2>Bem-vindo ao MyKanban</h2>
           <p>
             <strong>Crie e organize suas tarefas de forma simples e visual.
                     Arraste os cards entre as colunas para alterar o status da atividade.<br/>
@@ -29,10 +29,9 @@ export default function IntroModal() {
           </p>
         </div>
 
-        {/* GIF 
         <div className="intro-gif">
           <img src={dragGif} alt="Demonstração de arrastar tarefas" />
-        </div>*/}
+        </div>
 
         {/* AÇÃO */}
         <button
