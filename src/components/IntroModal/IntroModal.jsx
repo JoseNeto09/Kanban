@@ -4,13 +4,39 @@ import { useState } from "react";
 
 export default function IntroModal() {
   const [open, setOpen] = useState(true);
+  const [step, setStep] = useState(0);
 
   if (!open) return null;
 
+  const slides = [
+    {
+      title: "Bem-vindo ao MyKanban",
+      text: "Crie e organize suas tarefas de forma simples e visual."
+    },
+    {
+      title: "Arraste os Cards",
+      text: "Arraste os cards entre as colunas para alterar o status da atividade."
+    },
+    {
+      title: "Salve suas tarefas",
+      text: "Faça login com Google para salvar e acessar suas tarefas depois."
+    }
+  ];
+
+  const isLast = step === slides.length - 1;
+  const showGif = step === 1; // 👈 somente slide 2
+
+  const nextStep = () => {
+    if (!isLast) {
+      setStep(step + 1);
+    } else {
+      setOpen(false);
+    }
+  };
+
   return (
     <div className="intro-overlay">
-      <div className="intro-modal">
-        {/* BOTÃO FECHAR */}
+      <div className="intro-modal keynote">
         <button
           className="intro-close"
           onClick={() => setOpen(false)}
@@ -19,26 +45,25 @@ export default function IntroModal() {
           ✕
         </button>
 
-        {/* TEXTO */}
         <div className="intro-text">
-          <h2>Bem-vindo ao MyKanban</h2>
+          <h2>{slides[step].title}</h2>
           <p>
-            <strong>Crie e organize suas tarefas de forma simples e visual.
-                    Arraste os cards entre as colunas para alterar o status da atividade.<br/>
-                    Para salvar e acessar suas tarefas depois, faça login com sua conta Google.</strong>
+            <strong>{slides[step].text}</strong>
           </p>
         </div>
 
-        <div className="intro-gif">
-          <img src={dragGif} alt="Demonstração de arrastar tarefas" />
-        </div>
+        {/* 👇 GIF apenas no slide 2 */}
+        {showGif && (
+          <div className="intro-gif">
+            <img src={dragGif} alt="Demonstração de arrastar tarefas" />
+          </div>
+        )}
 
-        {/* AÇÃO */}
         <button
-          className="intro-action"
-          onClick={() => setOpen(false)}
+          className="intro-action keynote-btn"
+          onClick={nextStep}
         >
-          Entendi
+          {isLast ? "Entendi" : "Próximo"}
         </button>
       </div>
     </div>
