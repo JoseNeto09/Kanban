@@ -131,15 +131,14 @@ export default function Column({ state }) {
             />
 
             <div className="modalButtons">
+              <button onClick={() => setOpen(false)}>
+                Fechar
+              </button>
               <button
                 disabled={loading}
                 onClick={handleAddTask}
               >
                 {loading ? 'Adicionando...' : 'Adicionar'}
-              </button>
-
-              <button onClick={() => setOpen(false)}>
-                Fechar
               </button>
             </div>
           </div>
