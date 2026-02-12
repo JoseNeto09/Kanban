@@ -1,72 +1,106 @@
-/* ===== BASE (vale pros dois temas) ===== */
+/* =====================================================
+   FOOTER BASE (APLICA PARA TODOS OS TEMAS)
+===================================================== */
 .kanban-footer {
   width: 100%;
-  padding: 20px 16px;
+  padding: 18px 16px;
+
   position: fixed;
   bottom: 0;
   left: 0;
+
   font-size: 0.85rem;
   z-index: 100;
 
-  transition: background-color 0.3s ease,
-              color 0.3s ease,
-              box-shadow 0.3s ease,
-              border-color 0.3s ease;
+  backdrop-filter: blur(6px);
+
+  transition: background-color 0.25s ease,
+              color 0.25s ease,
+              box-shadow 0.25s ease,
+              border-color 0.25s ease;
 }
 
-/* CONTEÚDO */
+/* Evita footer cobrir conteúdo da página */
+body {
+  padding-bottom: 80px;
+}
+
+
+/* =====================================================
+   CONTEÚDO INTERNO
+===================================================== */
 .footer-content {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
+
+  gap: 12px;
   text-align: center;
-  white-space: nowrap;
+  flex-wrap: wrap;
 }
 
-/* TEXTO */
+
+/* =====================================================
+   TEXTO DO FOOTER
+===================================================== */
 .footer-text {
   display: flex;
   align-items: center;
   gap: 6px;
+
+  font-weight: 400;
+  letter-spacing: 0.2px;
 }
 
+/* Destaque nome / marca */
 .footer-text strong {
   color: #4ade80;
+  font-weight: 600;
 }
 
-/* LINKS / ÍCONES */
+
+/* =====================================================
+   LINKS / ÍCONES
+===================================================== */
 .footer-links {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
 }
 
 .footer-links a {
   display: flex;
   align-items: center;
   justify-content: center;
+
   text-decoration: none;
 
-  transition: color 0.2s ease, transform 0.2s ease;
+  transition: color 0.2s ease,
+              transform 0.2s ease,
+              opacity 0.2s ease;
 }
 
 .footer-links a:hover {
-  transform: translateY(-1px);
+  transform: translateY(-2px);
+  opacity: 0.9;
 }
 
 .footer-links svg {
-  width: 15px;
-  height: 15px;
+  width: 16px;
+  height: 16px;
   fill: currentColor;
 }
 
-/* ===== DARK THEME ===== */
+
+/* =====================================================
+   🌙 DARK THEME
+===================================================== */
 [data-theme="dark"] .kanban-footer {
-  background: #1e1e1e;
-  color: #cfcfcf;
-  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.3);
-  border-top: none;
+  background: rgba(30, 30, 30, 0.95);
+  color: #d4d4d4;
+
+  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.35);
+  border-top: 1px solid rgba(255, 255, 255, 0.04);
 }
 
 [data-theme="dark"] .footer-links a {
@@ -77,13 +111,16 @@
   color: #4ade80;
 }
 
-/* ===== LIGHT THEME ===== */
+
+/* =====================================================
+   ☀️ LIGHT THEME
+===================================================== */
 [data-theme="light"] .kanban-footer {
-  background: #f8fafc;
+  background: rgba(248, 250, 252, 0.95);
   color: #0f172a;
 
-  border-top: 1px solid #000; /* BORDA PRETA NO LIGHT */
-  box-shadow: none;
+  border-top: 1px solid #e2e8f0;
+  box-shadow: 0 -2px 12px rgba(0, 0, 0, 0.05);
 }
 
 [data-theme="light"] .footer-links a {
@@ -92,4 +129,29 @@
 
 [data-theme="light"] .footer-links a:hover {
   color: #22c55e;
+}
+
+
+/* =====================================================
+   📱 RESPONSIVIDADE
+===================================================== */
+@media (max-width: 600px) {
+  .kanban-footer {
+    padding: 14px 12px;
+    font-size: 0.8rem;
+  }
+
+  .footer-content {
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .footer-links {
+    gap: 10px;
+  }
+
+  .footer-links svg {
+    width: 15px;
+    height: 15px;
+  }
 }
