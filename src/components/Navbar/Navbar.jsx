@@ -7,21 +7,21 @@ import { BsSun, BsMoon } from "react-icons/bs";
 import { useEffect, useState } from "react";
 
 export default function Navbar() {
-  const [theme, setTheme] = useState("dark");
+  const [theme, setTheme] = useState(() => {
+    return localStorage.getItem("theme") || "dark";
+  });
 
   useEffect(() => {
     document.body.setAttribute("data-theme", theme);
+    localStorage.setItem("theme", theme);
   }, [theme]);
 
   const toggleTheme = () => {
-    setTheme((prevTheme) =>
-      prevTheme === "dark" ? "light" : "dark"
-    );
+    setTheme(prev => prev === "dark" ? "light" : "dark");
   };
 
   return (
-    <nav className="navbar">
-      {/* LOGO */}
+    <nav className="navbar premium-nav">
       <div className="navbar-logo">
         <img
           src={theme === "dark" ? logoDark : logoLight}
@@ -30,14 +30,11 @@ export default function Navbar() {
         />
       </div>
 
-      {/* TÍTULO */}
       <div className="navbar-links">
         <span>App Kanban</span>
       </div>
 
-      {/* AÇÕES */}
       <div className="navbar-actions">
-        {/* GitHub */}
         <a
           href="https://github.com/JoseNeto09"
           target="_blank"
@@ -48,12 +45,10 @@ export default function Navbar() {
           <VscGithubAlt size={26} />
         </a>
 
-        {/* BOTÃO TEMA */}
         <button
           className="theme-btn"
           onClick={toggleTheme}
           aria-label="Alternar tema"
-          title="Alternar tema"
         >
           {theme === "dark" ? <BsSun size={20} /> : <BsMoon size={20} />}
         </button>

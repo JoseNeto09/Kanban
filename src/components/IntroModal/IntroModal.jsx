@@ -11,35 +11,32 @@ export default function IntroModal() {
   const slides = [
     {
       title: "Bem-vindo ao MyKanban",
-      text: "Crie e organize suas tarefas de forma simples e visual.",
-      image: null,
+      text: "Crie e organize suas tarefas de forma simples e visual."
     },
     {
-      title: "Arraste suas tarefas",
-      text: "Arraste os cards entre as colunas para mudar o status da atividade.",
-      image: dragGif,
+      title: "Arraste os Cards",
+      text: "Arraste os cards entre as colunas para alterar o status da atividade."
     },
     {
       title: "Salve suas tarefas",
-      text: "Faça login com sua conta Google para salvar e acessar depois.",
-      image: null,
-    },
+      text: "Faça login com Google para salvar e acessar suas tarefas depois."
+    }
   ];
 
-  const next = () => {
-    if (step === slides.length - 1) return setOpen(false);
-    setStep(step + 1);
-  };
+  const isLast = step === slides.length - 1;
+  const showGif = step === 1; // 👈 somente slide 2
 
-  const prev = () => {
-    if (step === 0) return;
-    setStep(step - 1);
+  const nextStep = () => {
+    if (!isLast) {
+      setStep(step + 1);
+    } else {
+      setOpen(false);
+    }
   };
 
   return (
     <div className="intro-overlay">
-      <div className="intro-modal">
-        {/* FECHAR */}
+      <div className="intro-modal keynote">
         <button
           className="intro-close"
           onClick={() => setOpen(false)}
@@ -48,41 +45,26 @@ export default function IntroModal() {
           ✕
         </button>
 
-        {/* SLIDE */}
         <div className="intro-text">
           <h2>{slides[step].title}</h2>
-          <p><strong>{slides[step].text}</strong></p>
+          <p>
+            <strong>{slides[step].text}</strong>
+          </p>
         </div>
 
-        {/* GIF */}
-        {slides[step].image && (
+        {/* 👇 GIF apenas no slide 2 */}
+        {showGif && (
           <div className="intro-gif">
-            <img src={slides[step].image} alt="tutorial" />
+            <img src={dragGif} alt="Demonstração de arrastar tarefas" />
           </div>
         )}
 
-        {/* INDICADORES */}
-        <div className="intro-dots">
-          {slides.map((_, i) => (
-            <span
-              key={i}
-              className={i === step ? "dot active" : "dot"}
-            />
-          ))}
-        </div>
-
-        {/* BOTÕES */}
-        <div className="intro-buttons">
-          {step > 0 && (
-            <button className="intro-secondary" onClick={prev}>
-              Voltar
-            </button>
-          )}
-
-          <button className="intro-action" onClick={next}>
-            {step === slides.length - 1 ? "Começar" : "Próximo"}
-          </button>
-        </div>
+        <button
+          className="intro-action keynote-btn"
+          onClick={nextStep}
+        >
+          {isLast ? "Entendi" : "Próximo"}
+        </button>
       </div>
     </div>
   );
