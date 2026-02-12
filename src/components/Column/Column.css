@@ -5,29 +5,26 @@
   display: flex;
   justify-content: center;
   align-items: stretch;
-
   gap: clamp(1.2rem, 3vw, 2.5rem);
   padding-inline: clamp(1rem, 4vw, 3rem);
-
   width: 100%;
-  margin-top: 18px;
   box-sizing: border-box;
-
   background: transparent;
 }
 
 /* ========================= */
-/* COLUNA PREMIUM            */
+/* COLUNA PREMIUM 3.0        */
 /* ========================= */
 .column {
   display: flex;
   flex-direction: column;
+  position: relative;
 
   background: var(--bg-surface);
   color: var(--text-primary);
 
   border: 1px solid var(--border-soft);
-  border-radius: 16px;
+  border-radius: 18px;
 
   flex: 1 1 300px;
   max-width: 20rem;
@@ -35,25 +32,45 @@
   padding: 1rem;
 
   box-shadow:
-    0 10px 28px rgba(0,0,0,0.22),
-    0 2px 6px rgba(0,0,0,0.18);
+    0 8px 24px rgba(0,0,0,0.18),
+    0 2px 6px rgba(0,0,0,0.12);
 
-  transition: transform 0.18s ease,
-              box-shadow 0.25s ease;
+  transition: 
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    border 0.2s ease;
+
+  will-change: transform;
 }
 
-/* Hover Premium */
+/* Glow sutil */
+.column::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 18px;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+  box-shadow: 0 0 40px rgba(34,197,94,0.08);
+}
+
+/* Hover */
 .column:hover {
-  transform: translateY(-3px);
+  transform: translateY(-6px);
   box-shadow:
-    0 18px 45px rgba(0,0,0,0.28),
-    0 4px 12px rgba(0,0,0,0.22);
+    0 22px 55px rgba(0,0,0,0.30),
+    0 6px 16px rgba(0,0,0,0.22);
 }
 
-/* Light ajuste */
+.column:hover::after {
+  opacity: 1;
+}
+
+/* Light mode */
 body[data-theme="light"] .column {
   box-shadow:
-    0 6px 18px rgba(0,0,0,0.12),
+    0 6px 18px rgba(0,0,0,0.10),
     0 2px 6px rgba(0,0,0,0.08);
 }
 
@@ -61,11 +78,12 @@ body[data-theme="light"] .column {
 /* DRAG & DROP PREMIUM       */
 /* ========================= */
 .column.drop {
-  transform: scale(1.02);
+  transform: scale(1.04);
+  border: 1px solid var(--btn-primary);
 
   box-shadow:
     0 0 0 2px var(--btn-primary) inset,
-    0 18px 45px rgba(0,0,0,0.35);
+    0 30px 60px rgba(0,0,0,0.35);
 }
 
 /* ========================= */
@@ -75,10 +93,10 @@ body[data-theme="light"] .column {
   display: flex;
   justify-content: space-between;
   align-items: center;
-
   gap: 0.5rem;
+
   padding-bottom: 0.9rem;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.6rem;
 
   border-bottom: 1px solid var(--border-soft);
 }
@@ -91,7 +109,7 @@ body[data-theme="light"] .column {
   opacity: 0.85;
 }
 
-/* Botão Add Premium */
+/* Botão */
 .titleWrapper button {
   all: unset;
   cursor: pointer;
@@ -99,18 +117,22 @@ body[data-theme="light"] .column {
   background: var(--bg-button);
   color: var(--text-primary);
 
-  padding: 0.35rem 0.65rem;
-  border-radius: 8px;
+  padding: 0.45rem 0.85rem;
+  border-radius: 12px;
 
   font-size: 0.8rem;
   font-weight: 700;
 
-  transition: all 0.18s ease;
+  transition: 
+    transform 0.2s ease,
+    background 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 .titleWrapper button:hover {
   background: var(--bg-button-hover);
-  transform: translateY(-1px);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.18);
 }
 
 /* ========================= */
@@ -123,7 +145,22 @@ body[data-theme="light"] .column {
 
   flex: 1;
   overflow-y: auto;
-  padding-right: 0.35rem;
+  padding-right: 0.4rem;
+}
+
+/* Scroll custom */
+.tasksList::-webkit-scrollbar {
+  width: 6px;
+}
+
+.tasksList::-webkit-scrollbar-thumb {
+  background: var(--border-soft);
+  border-radius: 10px;
+  transition: background 0.2s ease;
+}
+
+.tasksList::-webkit-scrollbar-thumb:hover {
+  background: var(--btn-primary);
 }
 
 /* ========================= */
@@ -142,12 +179,12 @@ body[data-theme="light"] .column {
   font-style: italic;
   text-align: center;
 
-  opacity: 0.8;
+  opacity: 0.75;
   pointer-events: none;
 }
 
 /* ========================= */
-/* MODAL OVERLAY PREMIUM     */
+/* MODAL OVERLAY FIXO        */
 /* ========================= */
 .Modal {
   position: fixed;
@@ -155,21 +192,22 @@ body[data-theme="light"] .column {
 
   display: flex;
   justify-content: center;
-  align-items: flex-start;
+  align-items: center;
 
-  padding-top: 6rem;
-  overflow-y: auto;
-
-  background: rgba(0,0,0,0.65);
+  background: rgba(0, 0, 0, 0.75);
   backdrop-filter: blur(6px);
 
-  z-index: 999;
+  z-index: 99999; /* bem alto */
+
+  isolation: isolate; /* 🔥 força novo contexto */
 }
 
 /* ========================= */
-/* MODAL CONTENT PREMIUM     */
+/* MODAL CONTENT ESTÁVEL     */
 /* ========================= */
 .modalContent {
+  position: relative;
+
   display: flex;
   flex-direction: column;
 
@@ -180,25 +218,26 @@ body[data-theme="light"] .column {
   background: var(--bg-surface);
   color: var(--text-primary);
 
-  border-radius: 18px;
-  padding: 1.4rem;
+  border-radius: 20px;
+  padding: 1.5rem;
   gap: 1rem;
 
   overflow-y: auto;
 
-  box-shadow:
-    0 25px 60px rgba(0,0,0,0.45);
+  box-shadow: 0 30px 70px rgba(0,0,0,0.45);
+
+  transform: translateZ(0);
 }
 
 /* ========================= */
-/* INPUT / TEXTAREA PREMIUM  */
+/* INPUT / TEXTAREA          */
 /* ========================= */
 .modalContent input,
 .modalContent textarea {
   width: 100%;
-  padding: 0.75rem 1rem;
+  padding: 0.85rem 1rem;
 
-  border-radius: 10px;
+  border-radius: 14px;
   border: 1px solid var(--border-soft);
   outline: none;
 
@@ -206,31 +245,24 @@ body[data-theme="light"] .column {
   background: var(--bg-input);
   color: var(--text-primary);
 
-  transition: all 0.18s ease;
+  transition: 
+    border 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
-/* textarea controlado */
 .modalContent textarea {
   resize: vertical;
-  min-height: 95px;
-  max-width: 100%;
+  min-height: 100px;
 }
 
-/* Placeholder */
-.modalContent input::placeholder,
-.modalContent textarea::placeholder {
-  color: var(--text-secondary);
-}
-
-/* Focus Premium */
 .modalContent input:focus,
 .modalContent textarea:focus {
   border-color: var(--btn-primary);
-  box-shadow: 0 0 0 2px rgba(34,197,94,0.25);
+  box-shadow: 0 0 0 3px rgba(34,197,94,0.2);
 }
 
 /* ========================= */
-/* BOTÕES MODAL PREMIUM      */
+/* BOTÕES MODAL              */
 /* ========================= */
 .modalButtons {
   display: flex;
@@ -239,9 +271,9 @@ body[data-theme="light"] .column {
 
 .modalButtons button {
   flex: 1;
-  padding: 0.7rem 1rem;
+  padding: 0.8rem 1rem;
 
-  border-radius: 10px;
+  border-radius: 14px;
   border: none;
 
   background: var(--btn-primary);
@@ -250,16 +282,24 @@ body[data-theme="light"] .column {
   cursor: pointer;
   font-weight: 700;
 
-  transition: all 0.2s ease;
+  transition: 
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    opacity 0.2s ease;
 }
 
 .modalButtons button:hover {
   transform: translateY(-2px);
-  box-shadow: 0 10px 25px rgba(34,197,94,0.35);
+  box-shadow: 0 12px 28px rgba(34,197,94,0.35);
 }
 
 .modalButtons button:active {
-  transform: scale(0.96);
+  transform: scale(0.97);
+}
+
+.modalButtons button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
 }
 
 /* ========================= */
@@ -286,10 +326,17 @@ body[data-theme="light"] .column {
 
   .modalContent {
     max-height: 95vh;
-    padding: 1.4rem;
+    padding: 1.3rem;
   }
 
   .titleWrapper p {
     font-size: 0.78rem;
   }
+}
+
+/* ========================= */
+/* BLOQUEIO SCROLL BODY      */
+/* ========================= */
+body.modal-open {
+  overflow: hidden;
 }

@@ -10,8 +10,9 @@ export default function Column({ state }) {
   const [description, setDescription] = useState('');
   const [open, setOpen] = useState(false);
   const [drop, setDrop] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-  const normalizedState = state.trim().toLowerCase(); // pendente, andamento, feito
+  const normalizedState = state.trim().toLowerCase();
 
   const emptyMessages = {
     pendente: 'Nenhuma atividade pendente',
@@ -25,24 +26,40 @@ export default function Column({ state }) {
     feito: 'FEITO',
   };
 
-  const tasks = useStore(
-    (store) =>
-      store.tasks.filter(
-        (task) => task.status === normalizedState
-      ),
-    shallow
-  );
-
-  const addTask = useStore((s) => s.addTask);
-  const setDraggedTask = useStore((s) => s.setDraggedTask);
-  const draggedTask = useStore((s) => s.draggedTask);
-  const moveTask = useStore((s) => s.moveTask);
+  const { tasks, addTask, setDraggedTask, draggedTask, moveTask } =
+    useStore(
+      (store) => ({
+        tasks: store.tasks.filter(
+          (task) => task.status === normalizedState
+        ),
+        addTask: store.addTask,
+        setDraggedTask: store.setDraggedTask,
+        draggedTask: store.draggedTask,
+        moveTask: store.moveTask,
+      }),
+      shallow
+    );
 
   useEffect(() => {
     const handleEsc = (e) => e.key === 'Escape' && setOpen(false);
     window.addEventListener('keydown', handleEsc);
     return () => window.removeEventListener('keydown', handleEsc);
   }, []);
+
+  const handleAddTask = async () => {
+    if (!title.trim()) return;
+
+    try {
+      setLoading(true);
+      await addTask(title, description, normalizedState);
+
+      setTitle('');
+      setDescription('');
+      setOpen(false);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div
@@ -54,9 +71,16 @@ export default function Column({ state }) {
       onDragLeave={() => setDrop(false)}
       onDrop={() => {
         if (!draggedTask) return;
-        setDrop(false);
+
+        // Evita mover para mesma coluna
+        if (draggedTask.status === normalizedState) {
+          setDrop(false);
+          return;
+        }
+
         moveTask(draggedTask, normalizedState);
         setDraggedTask(null);
+        setDrop(false);
       }}
     >
       {/* Cabeçalho */}
@@ -80,12 +104,17 @@ export default function Column({ state }) {
 
       {/* Modal */}
       {open && (
-        <div className="Modal" onClick={() => setOpen(false)}>
+        <div
+          className="Modal"
+          role="dialog"
+          aria-modal="true"
+          onClick={() => setOpen(false)}
+        >
           <div
             className="modalContent"
             onClick={(e) => e.stopPropagation()}
           >
-            <h3>Adicionar nova tarefa</h3>
+            <h3 id="modal-title">Adicionar nova tarefa</h3>
 
             <input
               value={title}
@@ -103,19 +132,15 @@ export default function Column({ state }) {
 
             <div className="modalButtons">
               <button
-                onClick={async () => {
-                  if (!title.trim()) return;
-
-                  await addTask(title, description, normalizedState);
-
-                  setTitle('');
-                  setDescription('');
-                  setOpen(false);
-                }}
+                disabled={loading}
+                onClick={handleAddTask}
               >
-                Adicionar
+                {loading ? 'Adicionando...' : 'Adicionar'}
               </button>
-              <button onClick={() => setOpen(false)}>Fechar</button>
+
+              <button onClick={() => setOpen(false)}>
+                Fechar
+              </button>
             </div>
           </div>
         </div>
