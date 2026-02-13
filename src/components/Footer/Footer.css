@@ -1,17 +1,11 @@
-/* =====================================================
-   FOOTER BASE (APLICA PARA TODOS OS TEMAS)
-===================================================== */
 .kanban-footer {
   width: 100%;
   padding: 18px 16px;
-
   position: fixed;
   bottom: 0;
   left: 0;
-
-  font-size: 0.85rem;
+  font-size: 0.95rem;
   z-index: 100;
-
   backdrop-filter: blur(6px);
 
   transition: background-color 0.25s ease,
@@ -20,48 +14,34 @@
               border-color 0.25s ease;
 }
 
-/* Evita footer cobrir conteúdo da página */
 body {
   padding-bottom: 80px;
 }
 
-
-/* =====================================================
-   CONTEÚDO INTERNO
-===================================================== */
 .footer-content {
   display: flex;
   align-items: center;
   justify-content: center;
-
+  width: 100%;
+  height: 20px;
   gap: 12px;
   text-align: center;
   flex-wrap: wrap;
 }
 
-
-/* =====================================================
-   TEXTO DO FOOTER
-===================================================== */
 .footer-text {
   display: flex;
   align-items: center;
   gap: 6px;
-
-  font-weight: 400;
+  font-weight: 700;
   letter-spacing: 0.2px;
 }
 
-/* Destaque nome / marca */
 .footer-text strong {
   color: #4ade80;
   font-weight: 600;
 }
 
-
-/* =====================================================
-   LINKS / ÍCONES
-===================================================== */
 .footer-links {
   display: flex;
   align-items: center;
@@ -91,10 +71,6 @@ body {
   fill: currentColor;
 }
 
-
-/* =====================================================
-   🌙 DARK THEME
-===================================================== */
 [data-theme="dark"] .kanban-footer {
   background: rgba(30, 30, 30, 0.95);
   color: #d4d4d4;
@@ -111,10 +87,6 @@ body {
   color: #4ade80;
 }
 
-
-/* =====================================================
-   ☀️ LIGHT THEME
-===================================================== */
 [data-theme="light"] .kanban-footer {
   background: rgba(248, 250, 252, 0.95);
   color: #0f172a;
@@ -131,10 +103,6 @@ body {
   color: #22c55e;
 }
 
-
-/* =====================================================
-   📱 RESPONSIVIDADE
-===================================================== */
 @media (max-width: 600px) {
   .kanban-footer {
     padding: 14px 12px;
