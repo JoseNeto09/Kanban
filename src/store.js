@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 
-const API_URL = 'http://localhost:3333/tasks';
+const API_URL = 'https://back-end-kanban.vercel.app/tasks';
 
 export const useStore = create((set) => ({
   tasks: [],

@@ -32,6 +32,11 @@ export default function Task({ task }) {
       {/* Título */}
       <div className="taskTitle">{task.title}</div>
 
+      {/* Descrição */}
+      {task.description && (
+        <div className="taskDescription">{task.description}</div>
+      )}
+
       {/* Rodapé */}
       <div className="bottomWrapper">
         <small className="taskDate">

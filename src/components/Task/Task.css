@@ -67,6 +67,28 @@ body[data-theme="light"] .task {
 }
 
 /* ========================= */
+/* DESCRIÇÃO DA TASK         */
+/* ========================= */
+.taskDescription {
+  font-size: 0.8rem;
+  line-height: 1.5;
+  color: var(--text-secondary);
+  word-break: break-word;
+  
+  padding-top: 0.4rem;
+  margin-bottom: 0.3rem;
+  
+  border-top: 1px solid var(--border-soft);
+  
+  opacity: 0.9;
+}
+
+/* Ajuste no modo light */
+body[data-theme="light"] .taskDescription {
+  color: #666;
+}
+
+/* ========================= */
 /* FOOTER                    */
 /* ========================= */
 .bottomWrapper {
@@ -153,6 +175,14 @@ body[data-theme="dark"] .task img {
   .task {
     padding: 0.6rem;
     border-radius: 10px;
+  }
+
+  .taskTitle {
+    font-size: 0.88rem;
+  }
+
+  .taskDescription {
+    font-size: 0.75rem;
   }
 
   .status {
