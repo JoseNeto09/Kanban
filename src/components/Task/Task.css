@@ -8,7 +8,9 @@
   gap: 0.5rem;
 
   width: 100%;
+  min-width: 0; /* CRÍTICO para mobile */
   min-height: 5rem;
+  box-sizing: border-box;
 
   background: var(--bg-surface);
   color: var(--text-primary);
@@ -19,9 +21,9 @@
   border: 1px solid var(--border-soft);
 
   cursor: grab;
-  box-sizing: border-box;
 
   word-break: break-word;
+  overflow-wrap: break-word;
   overflow: hidden;
 
   box-shadow:
@@ -64,6 +66,7 @@ body[data-theme="light"] .task {
   line-height: 1.35;
   font-weight: 500;
   word-break: break-word;
+  overflow-wrap: break-word;
 }
 
 /* ========================= */
@@ -74,6 +77,7 @@ body[data-theme="light"] .task {
   line-height: 1.5;
   color: var(--text-secondary);
   word-break: break-word;
+  overflow-wrap: break-word;
   
   padding-top: 0.4rem;
   margin-bottom: 0.3rem;
@@ -97,6 +101,7 @@ body[data-theme="light"] .taskDescription {
   align-items: center;
   gap: 0.4rem;
   flex-wrap: wrap;
+  min-width: 0;
 }
 
 /* ========================= */
@@ -110,6 +115,7 @@ body[data-theme="light"] .taskDescription {
   border-radius: 999px;
 
   white-space: nowrap;
+  flex-shrink: 0; /* NUNCA encolhe */
 
   background: var(--COLOR-GRAY-LIGHT);
   color: #000;
@@ -140,15 +146,18 @@ body[data-theme="light"] .taskDescription {
   font-size: 0.75rem;
   color: var(--text-secondary);
   white-space: nowrap;
+  flex-shrink: 0;
 }
 
 /* ========================= */
 /* ÍCONE LIXEIRA PREMIUM     */
 /* ========================= */
-.task img {
+.bottomWrapper img {
   width: 1.2rem;
   height: 1.2rem;
   cursor: pointer;
+  flex-shrink: 0; /* CRÍTICO: nunca corta */
+  margin-left: auto; /* Empurra para direita */
 
   filter: invert(0);
 
@@ -158,19 +167,29 @@ body[data-theme="light"] .taskDescription {
     opacity 0.2s ease;
 }
 
-.task img:hover {
+.bottomWrapper img:hover {
   transform: scale(1.15);
   opacity: 0.85;
 }
 
 /* DARK → icone branco */
-body[data-theme="dark"] .task img {
+body[data-theme="dark"] .bottomWrapper img {
   filter: invert(1);
 }
 
 /* ========================= */
 /* MOBILE                    */
 /* ========================= */
+@media (max-width: 768px) {
+  .task {
+    padding: 0.7rem;
+  }
+
+  .bottomWrapper {
+    gap: 0.35rem;
+  }
+}
+
 @media (max-width: 400px) {
   .task {
     padding: 0.6rem;

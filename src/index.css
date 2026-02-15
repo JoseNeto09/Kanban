@@ -17,6 +17,21 @@ body {
 /* VARIÁVEIS GLOBAIS (DARK)  */
 /* ========================= */
 :root {
+
+  :root {
+  --btn-primary: #4a9eff;
+  --btn-primary-hover: #3a8eef;
+}
+
+[data-theme="dark"] {
+  --btn-primary: #4a9eff;
+  --btn-primary-hover: #3a8eef;
+}
+
+[data-theme="light"] {
+  --btn-primary: #4a9eff;
+  --btn-primary-hover: #3a8eef;
+}
   /* STATUS */
   --COLOR-GRAY: #333333;
   --COLOR-GRAY-DARK: #222222;
