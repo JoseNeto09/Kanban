@@ -62,7 +62,7 @@ body[data-theme="light"] .task {
 /* TEXTO DA TASK             */
 /* ========================= */
 .taskTitle {
-  font-size: 0.92rem;
+  font-size: 1.3rem;
   line-height: 1.35;
   font-weight: 500;
   word-break: break-word;
@@ -73,7 +73,7 @@ body[data-theme="light"] .task {
 /* DESCRIÇÃO DA TASK         */
 /* ========================= */
 .taskDescription {
-  font-size: 0.8rem;
+  font-size: 1.1rem;
   line-height: 1.5;
   color: var(--text-secondary);
   word-break: break-word;
@@ -108,18 +108,14 @@ body[data-theme="light"] .taskDescription {
 /* STATUS PILL PREMIUM       */
 /* ========================= */
 .status {
-  font-size: 0.65rem;
-  font-weight: 600;
-
-  padding: 0.28rem 0.6rem;
+  font-size: 1rem;
+  font-weight: 400;
+  padding: 0.28rem 0.8rem;
   border-radius: 999px;
-
   white-space: nowrap;
-  flex-shrink: 0; /* NUNCA encolhe */
-
+  flex-shrink: 0;
   background: var(--COLOR-GRAY-LIGHT);
   color: #000;
-
   letter-spacing: 0.02em;
 }
 
@@ -143,7 +139,7 @@ body[data-theme="light"] .taskDescription {
 /* DATA / HORA               */
 /* ========================= */
 .taskDate {
-  font-size: 0.75rem;
+  font-size: 1rem;
   color: var(--text-secondary);
   white-space: nowrap;
   flex-shrink: 0;
