@@ -114,7 +114,10 @@ export default function Column({ state }) {
             className="modalContent"
             onClick={(e) => e.stopPropagation()}
           >
-            <h3 id="modal-title">Adicionar nova tarefa</h3>
+            <div className="modalHeader">
+              <h3 id="modal-title">Adicionar nova tarefa</h3>
+              <button className="closeButton" onClick={() => setOpen(false)}>✕</button>
+            </div>
 
             <input
               value={title}
@@ -131,9 +134,6 @@ export default function Column({ state }) {
             />
 
             <div className="modalButtons">
-              <button onClick={() => setOpen(false)}>
-                Fechar
-              </button>
               <button
                 disabled={loading}
                 onClick={handleAddTask}
